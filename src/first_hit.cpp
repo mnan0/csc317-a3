@@ -9,7 +9,37 @@ bool first_hit(
   Eigen::Vector3d & n)
 {
   ////////////////////////////////////////////////////////////////////////////
-  // Replace with your code here:
+  bool object_check=false;
+  bool hit_check = false;
+  double t_param;
+  Eigen::Vector3d n_param;
+  double first_visible_hit = 0.0;
+  for (int i=0;i< objects.size();i++){
+    object_check = (*(objects.at(i).get())).intersect(ray, min_t, t_param,n_param);
+    //printf("%d",object_check);
+    if (object_check==true){
+      hit_check = true;
+      if (first_visible_hit==0.0){
+        first_visible_hit = t_param;
+        hit_id = i;
+        n = n_param;
+      }
+      else{
+        if (t_param < first_visible_hit){
+          first_visible_hit = t_param;
+          hit_id =i;
+          n = n_param;
+        }
+      }
+
+
+    }
+  }
+  if (hit_check==true){
+    t = first_visible_hit;
+    //printf("reached\n");
+    return true;
+  }
   return false;
   ////////////////////////////////////////////////////////////////////////////
 }
