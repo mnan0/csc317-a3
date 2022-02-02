@@ -3,7 +3,7 @@
 #include "first_hit.h"
 #include <iostream>
 #include <limits>
-#include <stdio.h>
+// #include <stdio.h>
 Eigen::Vector3d blinn_phong_shading(
   const Ray & ray,
   const int & hit_id, 
@@ -38,17 +38,17 @@ Eigen::Vector3d blinn_phong_shading(
     objects_copy = objects;
     objects_copy.erase(objects_copy.begin() + hit_id);
     // use first hit for shadows?? if found, then don't add spec and diffuse?
-    if (first_hit(light_ray,sqrt(std::numeric_limits<double>::epsilon()) ,objects_copy,hit_temp,t_temp,n_temp) && t_temp < max_t){
+    if (first_hit(light_ray,sqrt(std::numeric_limits<double>::epsilon()) ,objects_copy,hit_temp,t_temp,n_temp) && t_temp <= max_t){
       //printf("%d",t_temp < max_t);
       continue;
     }
     else{
-      diffuse += std::max(0.0,n.dot(light_ray.direction)) * ((*(lights.at(i).get())).I.array() * m.kd.array()).matrix();
+      diffuse += std::max(0.0,n.normalized().dot(light_ray.direction)) * ((*(lights.at(i).get())).I.array() * m.kd.array()).matrix();
       
       // calculate half vector
       // treat ray as v
       half = ((-1.0)*(ray.direction.normalized()) + light_ray.direction).normalized();
-      specular += pow(std::max(0.0,n.dot(half)),m.phong_exponent) * ((*(lights.at(i).get())).I.array() * m.ks.array()).matrix();
+      specular += pow(std::max(0.0,n.normalized().dot(half)),m.phong_exponent) * ((*(lights.at(i).get())).I.array() * m.ks.array()).matrix();
     }
   }
   return ambient + specular + diffuse;

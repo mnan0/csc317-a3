@@ -11,7 +11,7 @@
 #include <memory>
 #include <limits>
 #include <functional>
-
+#include <stdio.h>
 
 int main(int argc, char * argv[])
 {
@@ -39,9 +39,10 @@ int main(int argc, char * argv[])
       // Compute viewing ray
       Ray ray;
       viewing_ray(camera,i,j,width,height,ray);
+      printf("%d %d\n", i, j);
       
       // Shoot ray and collect color
-      raycolor(ray,1.0,objects,lights,0,rgb);
+      raycolor(ray,1.0,objects,lights,3,rgb);
 
       // Write double precision color into image
       auto clamp = [](double s){ return std::max(std::min(s,1.0),0.0);};
