@@ -13,7 +13,6 @@
 Many of the classes and functions of this assignment are borrowed or adapted
 from the previous [ray casting assignment](https://github.com/alecjacobson/computer-graphics-ray-casting).
 
-YAYAYA
 
 Unlike that assignment, this [ray
 tracer](https://en.wikipedia.org/wiki/Ray_tracing_(graphics)) will produce
